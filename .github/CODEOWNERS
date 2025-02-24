@@ -1,0 +1,17 @@
+# Global owner
+*       @rafaumeu
+
+# Core application
+/src/services/   @rafaumeu
+/src/controllers/ @rafaumeu
+/src/@types/     @rafaumeu
+/src/utils/      @rafaumeu
+
+# Infrastructure
+/.github/        @rafaumeu
+/docker/         @rafaumeu
+/scripts/        @rafaumeu
+
+# Documentation
+/*.md            @rafaumeu
+/docs/           @rafaumeu
