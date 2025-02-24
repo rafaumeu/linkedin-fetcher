@@ -1,0 +1,25 @@
+name: Code Scanning
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  code-scanning:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.0.0'
+      - name: Install dependencies
+        run: yarn install
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+      - name: Run CodeQL analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: 'security' 
