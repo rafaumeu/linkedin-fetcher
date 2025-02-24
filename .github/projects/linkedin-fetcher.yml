@@ -28,22 +28,22 @@ columns:
 
 labels:
   - name: auth
-    color: '#0052CC'
+    color: "#0052CC"
     description: Autenticação LinkedIn
 
   - name: scraping
-    color: '#36B37E'
+    color: "#36B37E"
     description: Scraping de dados
 
   - name: bug
-    color: '#FF0000'
+    color: "#FF0000"
     description: Algo não está funcionando
 
   - name: enhancement
-    color: '#1D76DB'
+    color: "#1D76DB"
     description: Nova funcionalidade
 
 milestones:
   - title: MVP
-g    description: Versão inicial com autenticação e scraping básico
+    description: Initial version with basic authentication and scraping
     due_date: 2024-04-30
