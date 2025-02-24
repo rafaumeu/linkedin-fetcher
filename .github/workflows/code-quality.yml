@@ -14,7 +14,7 @@ jobs:
       
       - uses: actions/setup-node@v3
         with:
-          node-version: '22.0.0'
+          node-version: '20.0.0'  # Atualizado de 22.0.0 para 20.0.0
           cache: 'yarn'
       
       - name: Install dependencies
@@ -24,4 +24,4 @@ jobs:
         run: yarn lint
       
       - name: Run Format Check
-        run: yarn lint:check 
+        run: yarn format # Corrigido de lint:check para format
