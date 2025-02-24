@@ -1,61 +1,40 @@
-# Frontend
 frontend:
-  - 'src/pages/**/*'
-  - 'src/components/**/*'
+  - any: ["src/pages/**/*", "src/components/**/*"]
 
-# Backend
 backend:
-  - 'src/server/**/*'
-  - 'src/api/**/*'
+  - any: ["src/server/**/*", "src/api/**/*"]
 
-# Core changes
 core:
-  - 'src/server.ts'
-  - 'src/env.ts'
-  - 'src/index.ts'
+  - any: ["src/server.ts", "src/env.ts", "src/index.ts"]
 
-# Services
 services:
-  - 'src/services/**/*'
+  - any: ["src/services/**/*"]
 
-# Database
 database:
-  - 'src/database/**/*'
-  - 'drizzle.config.ts'
-  - 'src/schema/**/*'
+  - any: ["src/database/**/*", "drizzle.config.ts", "src/schema/**/*"]
 
-# Tests
 tests:
-  - 'src/**/*.test.ts'
-  - 'src/**/*.spec.ts'
-  - 'vitest.config.ts'
+  - any: ["src/**/*.test.ts", "src/**/*.spec.ts", "vitest.config.ts"]
 
-# Dependencies
 dependencies:
-  - 'package.json'
-  - 'yarn.lock'
-  - 'pnpm-lock.yaml'
+  - any: ["package.json", "yarn.lock", "pnpm-lock.yaml"]
 
-# Documentation
 documentation:
-  - '**/*.md'
-  - 'docs/**/*'
+  - any: ["**/*.md", "docs/**/*"]
 
-# Configuration
 configuration:
-  - '.github/**/*'
-  - '*.config.js'
-  - '*.config.ts'
-  - '.env.example'
-  - 'biome.json'
-  - 'tsconfig.json'
+  - any:
+      [
+        ".github/**/*",
+        "*.config.js",
+        "*.config.ts",
+        ".env.example",
+        "biome.json",
+        "tsconfig.json",
+      ]
 
-# CI/CD
 ci:
-  - '.github/workflows/**/*'
+  - any: [".github/workflows/**/*"]
 
-# Docker
 docker:
-  - 'Dockerfile'
-  - 'docker-compose.yml'
-  - '.dockerignore'
+  - any: ["Dockerfile", "docker-compose.yml", ".dockerignore"]
