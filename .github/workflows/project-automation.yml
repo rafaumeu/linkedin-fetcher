@@ -17,7 +17,7 @@ jobs:
       - uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/users/rafaumeu/projects/6
-          github-token: ${{ secrets.PROJECT_AUTOMATION_TOKEN }}  # Changed to a custom token name
+          github-token: ${{ secrets.PROJECT_AUTOMATION_TOKEN }}
       
       - name: Classify Issue
         if: github.event_name == 'issues'
