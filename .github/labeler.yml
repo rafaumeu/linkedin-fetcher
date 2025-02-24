@@ -1,54 +1,59 @@
+# Frontend
 frontend:
-- src/pages/**/*
-- src/components/**/*
+- 'src/pages/**/*'
+- 'src/components/**/*'
 
+# Backend
 backend:
+- 'src/server/**/*'
+- 'src/api/**/*'
+
 # Core changes
 core:
-- src/server.ts
-- src/env.ts
-- src/index.ts
+- 'src/server.ts'
+- 'src/env.ts'
+- 'src/index.ts'
 
 # Services
 services:
-- src/services/**/*
+- 'src/services/**/*'
 
 # Database
 database:
-- src/database/**/*
-- drizzle.config.ts
-- src/schema/**/*
+- 'src/database/**/*'
+- 'drizzle.config.ts'
+- 'src/schema/**/*'
 
 # Tests
 tests:
-- src/**/*.test.ts
-- src/**/*.spec.ts
-- vitest.config.ts
+- 'src/**/*.test.ts'
+- 'src/**/*.spec.ts'
+- 'vitest.config.ts'
 
 # Dependencies
 dependencies:
-- package.json
-- yarn.lock
-- pnpm-lock.yaml
+- 'package.json'
+- 'yarn.lock'
+- 'pnpm-lock.yaml'
 
 # Documentation
 documentation:
 - '**/*.md'
-- docs/**/*
+- 'docs/**/*'
 
 # Configuration
 configuration:
-- .github/**/*
+- '.github/**/*'
 - '*.config.js'
 - '*.config.ts'
 - '.env.example'
 
 # CI/CD
 ci:
-- .github/workflows/**/*
+- '.github/workflows/**/*'
 
 # Docker
 docker:
-- Dockerfile
-- docker-compose.yml
-- .dockerignore
+- 'Dockerfile'
+- 'docker-compose.yml'
+- '.dockerignore'
