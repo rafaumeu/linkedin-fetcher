@@ -1,0 +1,32 @@
+# Configuration for probot-stale
+
+# Number of days of inactivity before an Issue or Pull Request becomes stale
+daysUntilStale: 60
+
+# Number of days of inactivity before a stale Issue or Pull Request is closed
+daysUntilClose: 7
+
+# Issues or Pull Requests with these labels will never be considered stale
+exemptLabels:
+  - pinned
+  - security
+  - bug
+  - enhancement
+  - documentation
+
+# Label to use when marking as stale
+staleLabel: wontfix
+
+# Comment to post when marking as stale
+markComment: >
+  Esta issue foi marcada como stale por falta de atividade recente.
+  Será fechada se não houver nova atividade em 7 dias.
+  Remova o label 'wontfix' ou comente para manter ativa.
+
+# Comment to post when closing a stale Issue or Pull Request
+closeComment: >
+  Esta issue foi fechada automaticamente por inatividade.
+  Sinta-se à vontade para reabrir se ainda for relevante.
+
+# Limit to only `issues` or `pulls`
+only: issues
