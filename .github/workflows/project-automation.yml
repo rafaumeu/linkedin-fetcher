@@ -9,11 +9,14 @@ on:
 jobs:
   project_automation:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/users/rafaumeu/projects/6
-          github-token: ${{ secrets.PROJECT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}  # Changed from PROJECT_TOKEN to GITHUB_TOKEN
       
       - name: Classify Issue
         if: github.event_name == 'issues'
@@ -66,4 +69,4 @@ jobs:
                 repo: context.repo.repo,
                 labels: services.map(s => s.toLowerCase())
               });
-            } 
+            }
