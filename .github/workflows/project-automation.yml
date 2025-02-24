@@ -4,7 +4,7 @@ on:
   issues:
     types: [opened, labeled, unlabeled]
   pull_request:
-    types: [opened, ready_for_review, review_requested]
+    types: [opened, ready_for_review, review_requested, converted_to_draft]
 
 jobs:
   project_automation:
@@ -12,12 +12,82 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-      project: write  # Adicionando permissão de projeto
+      repository-projects: write
     steps:
+      - uses: actions/checkout@v4
+      
       - uses: actions/add-to-project@v0.5.0
         with:
           project-url: https://github.com/users/rafaumeu/projects/6
           github-token: ${{ secrets.PROJECT_AUTOMATION_TOKEN }}
+      
+      - name: Update Project Status
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PROJECT_AUTOMATION_TOKEN }}
+          script: |
+            const event = context.payload;
+            
+            // Define status based on event type
+            let status = '📥 Backlog';
+            if (event.pull_request) {
+              if (event.pull_request.draft) {
+                status = '🏗️ In Progress';
+              } else if (event.action === 'ready_for_review') {
+                status = '👀 Review';
+              }
+            } else if (event.issue) {
+              status = '📋 To Do';
+            }
+            
+            // Get project item ID
+            const projectItems = await github.graphql(`
+              query($org: String!, $number: Int!) {
+                user(login: $org) {
+                  projectV2(number: $number) {
+                    items(first: 100) {
+                      nodes {
+                        id
+                        content {
+                          ... on Issue {
+                            number
+                          }
+                          ... on PullRequest {
+                            number
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `, {
+              org: context.repo.owner,
+              number: 6
+            });
+
+            // Update the status
+            await github.graphql(`
+              mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $value: String!) {
+                updateProjectV2ItemFieldValue(
+                  input: {
+                    projectId: $projectId
+                    itemId: $itemId
+                    fieldId: $fieldId
+                    value: { singleSelectOptionId: $value }
+                  }
+                ) {
+                  projectV2Item {
+                    id
+                  }
+                }
+              }
+            `, {
+              projectId: "PVT_kwHOAdW7184Ayse1",
+              itemId: itemId,
+              fieldId: "PVTSSF_lAHOAdW7184Ayse1zgom1ag",
+              value: status
+            });
       
       - name: Classify Issue
         if: github.event_name == 'issues'
