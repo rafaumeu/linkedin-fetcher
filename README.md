@@ -9,6 +9,8 @@ A modern LinkedIn profile scraping service built with TypeScript and Fastify.
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-2D3748.svg)](https://www.postgresql.org/)
 [![Drizzle](https://img.shields.io/badge/Drizzle-Latest-green.svg)](https://orm.drizzle.team)
 [![Code Style](https://img.shields.io/badge/Code_Style-Biome-purple.svg)](https://biomejs.dev/)
+[![Release](https://img.shields.io/github/v/release/rafaumeu/linkedin-fetcher)](https://github.com/rafaumeu/linkedin-fetcher/releases)
+[![License](https://img.shields.io/github/license/rafaumeu/linkedin-fetcher)](LICENSE)
 
 ---
 
@@ -120,3 +122,18 @@ git checkout -b feature/your-feature
 ## 📄 License
 
 MIT © [Rafael Dias Zendron](https://github.com/rafaumeu)
+
+## 📦 Releases
+
+Our versioning follows [Semantic Versioning](https://semver.org/):
+- **Major** (X.0.0): Breaking changes
+- **Minor** (0.X.0): New features
+- **Patch** (0.0.X): Bug fixes and minor improvements
+
+Releases are automatically generated based on conventional commits:
+- `feat:` triggers a minor version bump
+- `fix:` triggers a patch version bump
+- `BREAKING CHANGE:` or `!:` triggers a major version bump
+
+### Latest Changes
+Check our [releases page](https://github.com/rafaumeu/linkedin-fetcher/releases) for detailed changelog.
