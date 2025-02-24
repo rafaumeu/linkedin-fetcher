@@ -58,6 +58,26 @@ jobs:
               pull_number: context.payload.pull_request.number
             });
             
+            const labels = new Set();
+            
+            files.data.forEach(file => {
+              if (file.filename.includes('test')) labels.add('testing');
+              if (file.filename.includes('docker')) labels.add('docker');
+              if (file.filename.includes('.github/workflows')) labels.add('ci');
+              if (file.filename.endsWith('.md')) labels.add('documentation');
+              if (file.filename.includes('services/')) labels.add('enhancement');
+              if (file.filename.includes('database/')) labels.add('database');
+            });
+            
+            if (labels.size > 0) {
+              await github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: Array.from(labels)
+              });
+            }
+            
             // Referência aos serviços no código
             const services = files.data
               .filter(file => file.filename.includes('services/'))

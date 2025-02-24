@@ -3,18 +3,52 @@ frontend:
 - src/components/**/*
 
 backend:
+# Core changes
+core:
 - src/server.ts
+- src/env.ts
+- src/index.ts
+
+# Services
+services:
 - src/services/**/*
 
+# Database
+database:
+- src/database/**/*
+- drizzle.config.ts
+- src/schema/**/*
+
+# Tests
+tests:
+- src/**/*.test.ts
+- src/**/*.spec.ts
+- vitest.config.ts
+
+# Dependencies
 dependencies:
 - package.json
 - yarn.lock
+- pnpm-lock.yaml
 
+# Documentation
 documentation:
 - '**/*.md'
 - docs/**/*
 
+# Configuration
 configuration:
 - .github/**/*
 - '*.config.js'
 - '*.config.ts'
+- '.env.example'
+
+# CI/CD
+ci:
+- .github/workflows/**/*
+
+# Docker
+docker:
+- Dockerfile
+- docker-compose.yml
+- .dockerignore
