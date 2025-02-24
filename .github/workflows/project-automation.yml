@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-      pull-requests: write
-      project: write  # Adicionando permissão de projeto
+      pull-requests: write  # Removed project permission as it's not supported
     steps:
       - uses: actions/add-to-project@v0.5.0
         with:
