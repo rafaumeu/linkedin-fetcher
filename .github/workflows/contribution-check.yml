@@ -22,6 +22,7 @@ jobs:
           echo "DATABASE_URL=postgres://test:test@localhost:5432/test" >> .env
           echo "PORT=3333" >> .env
           echo "LOAD_ENV_FILE=true" >> .env
+      # Create proper test structure
       - name: Create test files structure
         run: |
           mkdir -p src/services/scrapper
@@ -30,7 +31,12 @@ jobs:
           mkdir -p src/utils/extractors
           mkdir -p src/utils/profile
           mkdir -p src/db
-          mkdir -p src/test/setup
+          mkdir -p src/test
+          touch src/test/setup.ts
+      # Fix the setupFiles path in vitest config
+      - name: Fix vitest config
+        run: |
+          sed -i 's/srcPlease generate unit test code\/setup/src\/test\/setup/g' vitest.config.ts
       - name: Run Lint
         run: yarn lint --fix
       - name: Run Format

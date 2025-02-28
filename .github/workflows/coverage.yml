@@ -23,8 +23,9 @@ jobs:
           echo "NODE_ENV=test" > .env
           echo "DATABASE_URL=postgres://test:test@localhost:5432/test" >> .env
           echo "PORT=3333" >> .env
-      # Garantir que os arquivos existam para os testes
-      - name: Ensure test files exist
+          echo "LOAD_ENV_FILE=true" >> .env
+      # Create proper test structure
+      - name: Create test files structure
         run: |
           mkdir -p src/services/scrapper
           mkdir -p src/services/browser
@@ -32,7 +33,12 @@ jobs:
           mkdir -p src/utils/extractors
           mkdir -p src/utils/profile
           mkdir -p src/db
-          touch src/env.ts
+          mkdir -p src/test
+          touch src/test/setup.ts
+      # Fix the setupFiles path in vitest config
+      - name: Fix vitest config
+        run: |
+          sed -i 's/srcPlease generate unit test code\/setup/src\/test\/setup/g' vitest.config.ts
       - name: Run tests with coverage
         run: yarn test:coverage
       - name: Upload coverage to Codecov
