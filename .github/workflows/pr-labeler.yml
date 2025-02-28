@@ -10,7 +10,15 @@ jobs:
       contents: read
       pull-requests: write
     steps:
+<<<<<<< HEAD
       - uses: actions/labeler@v4
+||||||| a840b60
+      - uses: actions/checkout@v4
+      - uses: actions/labeler@v4
+=======
+      - uses: actions/checkout@v4
+      - uses: actions/labeler@v5
+>>>>>>> main
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           configuration-path: .github/labeler.yml
