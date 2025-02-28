@@ -1,11 +1,13 @@
-name: Contribution Check
+name: Coverage
 
 on:
+  push:
+    branches: [main]
   pull_request:
-    branches: [main, develop]
+    branches: [main]
 
 jobs:
-  check:
+  coverage:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +33,12 @@ jobs:
           mkdir -p src/utils/profile
           mkdir -p src/db
           touch src/env.ts
-      - name: Run Lint
-        run: yarn lint
-      - name: Run Tests
-        run: yarn test
+      - name: Run tests with coverage
+        run: yarn test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage
+          flags: unittests
+          fail_ci_if_error: true
