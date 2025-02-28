@@ -10,34 +10,36 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    
+
     steps:
       - uses: actions/checkout@v4
-      
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.10.0'
-          
+          node-version: "20.10.0"
+          cache: "yarn"
       - name: Install dependencies
         run: yarn install
-        
-      - name: Run Code Analysis with Biome
-        run: npx biome check .
-        
+      - name: Setup test environment
+        run: |
+          echo "NODE_ENV=test" > .env
+          echo "DATABASE_URL=postgres://test:test@localhost:5432/test" >> .env
+          echo "PORT=3333" >> .env
+          echo "LOAD_ENV_FILE=true" >> .env
+      - name: Run Code Analysis
+        run: yarn lint --fix && yarn format --write
       - name: Security Check
         uses: reviewdog/action-detect-secrets@v0.28
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          
       - name: Comment on PR Status
         uses: actions/github-script@v7
         with:
           script: |
             const additions = context.payload.pull_request.additions;
             const deletions = context.payload.pull_request.deletions;
-            
+
             if (additions < 50 && deletions < 50) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,

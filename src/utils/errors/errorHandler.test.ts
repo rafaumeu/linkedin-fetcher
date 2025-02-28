@@ -23,12 +23,12 @@ describe("Error Handler", () => {
 	beforeEach(() => {
 		mockSend = vi.fn().mockReturnThis();
 		mockStatus = vi.fn().mockReturnValue({ send: mockSend });
-		
+
 		mockRequest = {} as FastifyRequest;
 		mockReply = {
 			status: mockStatus,
 		} as unknown as FastifyReply;
-		
+
 		vi.clearAllMocks();
 	});
 

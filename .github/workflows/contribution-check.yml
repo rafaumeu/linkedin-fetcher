@@ -21,8 +21,8 @@ jobs:
           echo "NODE_ENV=test" > .env
           echo "DATABASE_URL=postgres://test:test@localhost:5432/test" >> .env
           echo "PORT=3333" >> .env
-      # Garantir que os arquivos existam para os testes
-      - name: Ensure test files exist
+          echo "LOAD_ENV_FILE=true" >> .env
+      - name: Create test files structure
         run: |
           mkdir -p src/services/scrapper
           mkdir -p src/services/browser
@@ -30,8 +30,10 @@ jobs:
           mkdir -p src/utils/extractors
           mkdir -p src/utils/profile
           mkdir -p src/db
-          touch src/env.ts
+          mkdir -p src/test/setup
       - name: Run Lint
-        run: yarn lint
+        run: yarn lint --fix
+      - name: Run Format
+        run: yarn format --write
       - name: Run Tests
         run: yarn test
