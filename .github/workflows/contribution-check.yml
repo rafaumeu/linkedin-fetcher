@@ -79,7 +79,6 @@ jobs:
           });
           EOF
 
-          # Update vitest config to properly resolve modules
       - name: Update vitest config
         run: |
           cat > vitest.config.ts << 'EOF'
@@ -93,12 +92,6 @@ jobs:
               environment: "node",
               setupFiles: ["./src/test/setup.ts"],
               include: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-              coverage: {
-                provider: "v8",
-                enabled: true,
-                reporter: ["text", "json", "html"],
-                reportsDirectory: "./coverage"
-              },
             },
             resolve: {
               alias: {
