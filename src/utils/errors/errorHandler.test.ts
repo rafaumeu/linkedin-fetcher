@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ZodError, z } from "zod";
 import { AppError } from "./AppError";
 import { errorHandler } from "./errorHandler";
+import type { Mock } from "vitest";
 
 // Mock env para evitar erros de validação
 vi.mock("../../env", () => ({
@@ -14,11 +15,10 @@ vi.mock("../../env", () => ({
 }));
 
 describe("Error Handler", () => {
-	// Fix: Create a proper mock for FastifyReply with chained methods
 	let mockRequest: FastifyRequest;
 	let mockReply: FastifyReply;
-	let mockStatus: any;
-	let mockSend: any;
+	let mockStatus: Mock;
+	let mockSend: Mock;
 
 	beforeEach(() => {
 		mockSend = vi.fn().mockReturnThis();
