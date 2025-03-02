@@ -16,6 +16,9 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn install
+      - name: Install rimraf globally
+        run: npm install -g rimraf
+
       - name: Setup test environment
         run: |
           echo "NODE_ENV=test" > .env

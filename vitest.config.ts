@@ -6,9 +6,16 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"@": resolve(__dirname, "./src"),
+			"./env": resolve(__dirname, "./src/env"),
+			"./connection": resolve(__dirname, "./src/db/connection"),
+			"./domUtils": resolve(__dirname, "./src/utils/domUtils"),
+			"./AppError": resolve(__dirname, "./src/utils/errors/AppError"),
+			"./errorHandler": resolve(__dirname, "./src/utils/errors/errorHandler"),
+			"./profileExtractor": resolve(__dirname, "./src/utils/extractors/profileExtractor"),
+			"./profileUtils": resolve(__dirname, "./src/utils/profile/profileUtils"),
 		},
 	},
-	plugins: [tsconfigPaths()], // Certifique-se de que o plugin está sendo usado
+	plugins: [tsconfigPaths()],
 	test: {
 		globals: true,
 		environment: "node",

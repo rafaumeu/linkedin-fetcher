@@ -18,6 +18,8 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn install
+      - name: Install rimraf globally
+        run: npm install -g rimraf
       - name: Setup test environment
         run: |
           echo "NODE_ENV=test" > .env
@@ -38,7 +40,7 @@ jobs:
           mkdir -p src/db
           mkdir -p src/test/builders
           mkdir -p src/test/factories
-          
+
           # Create basic files with proper exports
           echo "export const env = { NODE_ENV: 'test', DATABASE_URL: 'postgres://test:test@localhost:5432/test', PORT: 3333 };" > src/env.ts
           echo "export class AppError extends Error { constructor(message: string, public statusCode = 400) { super(message); } }" > src/utils/errors/AppError.ts
@@ -49,11 +51,11 @@ jobs:
           echo "export const profileExtractor = { extract: () => ({}) };" > src/utils/extractors/profileExtractor.ts
           echo "export const profileUtils = { format: () => ({}) };" > src/utils/profile/profileUtils.ts
           echo "export const errorHandler = (err, req, res, next) => { res.status(500).send('Error'); };" > src/utils/errors/errorHandler.ts
-          
+
           # Create test helpers
           echo "export class ProfileBuilder { build() { return {}; } }" > src/test/builders/ProfileBuilder.ts
           echo "export const createMockProfile = () => ({})" > src/test/factories/profileData.ts
-          
+
           # Create setup file with proper configuration
           cat > src/test/setup.ts << 'EOF'
           import { afterAll, beforeAll, beforeEach, afterEach, vi } from "vitest";
@@ -78,7 +80,7 @@ jobs:
             vi.useRealTimers();
           });
           EOF
-      
+
       # Update vitest config to properly resolve modules
       - name: Update vitest config
         run: |
@@ -112,13 +114,13 @@ jobs:
             }
           });
           EOF
-      
+
       # Ensure coverage directory permissions
       - name: Ensure coverage directory permissions
         run: |
           mkdir -p coverage
           chmod -R 777 coverage
-      
+
       - name: Run tests with coverage
         run: yarn test:coverage
       - name: Upload coverage to Codecov
