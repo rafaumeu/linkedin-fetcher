@@ -91,6 +91,7 @@ jobs:
           export default defineConfig({
             plugins: [tsconfigPaths()],
             test: {
+              globals: true,
               environment: "node",
               setupFiles: ["./src/test/setup.ts"],
               include: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
@@ -114,7 +115,79 @@ jobs:
             }
           });
           EOF
+      - name: Create test helpers
+        run: |
+          # Create test helper directories
+          mkdir -p src/test/helpers
 
+          # Create mockBrowser helper
+          cat > src/test/helpers/mockBrowser.ts << 'EOF'
+          import { vi } from 'vitest';
+
+          export const createMockBrowserService = () => ({
+            initialize: vi.fn().mockResolvedValue(undefined),
+            getPage: vi.fn().mockResolvedValue({}),
+            close: vi.fn().mockResolvedValue(undefined)
+          });
+          EOF
+
+          # Create setupDomMocks helper
+          cat > src/test/helpers/setupDomMocks.ts << 'EOF'
+          import { vi } from 'vitest';
+
+          export const setupDomMocks = () => {
+            // Mock document methods
+            global.document = {
+              querySelector: vi.fn(),
+              querySelectorAll: vi.fn(() => []),
+            } as unknown as Document;
+
+            return {
+              mockQuerySelector: (selector: string, returnValue: any) => {
+                vi.mocked(document.querySelector).mockImplementation((s) =>
+                  s === selector ? returnValue as Element : null
+                );
+              },
+              mockQuerySelectorAll: (selector: string, returnValues: any[]) => {
+                vi.mocked(document.querySelectorAll).mockImplementation((s) =>
+                  s === selector ? returnValues as unknown as NodeListOf<Element> : [] as unknown as NodeListOf<Element>
+                );
+              }
+            };
+          };
+          EOF
+      - name: Update errorHandler implementation
+        run: |
+          cat > src/utils/errors/errorHandler.ts << 'EOF'
+          import type { FastifyError, FastifyReply, FastifyRequest } from "fastify";
+          import { ZodError } from "zod";
+          import { AppError } from "./AppError";
+
+          export const errorHandler = (
+            error: FastifyError | Error | ZodError,
+            _request: FastifyRequest,
+            reply: FastifyReply
+          ) => {
+            if (error instanceof AppError) {
+              return reply.status(error.statusCode).send({
+                message: error.message,
+                code: "AppError",
+              });
+            }
+
+            if (error instanceof ZodError) {
+              return reply.status(400).send({
+                message: "Erro de validação.",
+                issues: error.format(),
+              });
+            }
+
+            return reply.status(500).send({
+              code: "InternalServerError",
+              message: "Erro interno do servidor.",
+            });
+          };
+          EOF
       - name: Run Lint
         run: yarn lint --fix
       - name: Run Format
