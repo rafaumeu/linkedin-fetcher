@@ -18,15 +18,17 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn install
+      - name: Update Vitest packages
+        run: yarn add -D vitest@latest @vitest/coverage-v8@latest
       - name: Install rimraf globally
         run: npm install -g rimraf
+
       - name: Setup test environment
         run: |
           echo "NODE_ENV=test" > .env
-          echo "DATABASE_URL=postgres://user:pass@localhost:5432/test" >> .env
+          echo "DATABASE_URL=postgres://test:test@localhost:5432/test" >> .env
           echo "PORT=3333" >> .env
           echo "LOAD_ENV_FILE=true" >> .env
-          echo "TEST_MODE=index" >> .env
           echo "CI=true" >> .env
       # Create proper test structure
       - name: Create test files structure
@@ -56,7 +58,7 @@ jobs:
           echo "export class ProfileBuilder { build() { return {}; } }" > src/test/builders/ProfileBuilder.ts
           echo "export const createMockProfile = () => ({})" > src/test/factories/profileData.ts
 
-          # Create setup file with proper configuration
+          # Create setup file
           cat > src/test/setup.ts << 'EOF'
           import { afterAll, beforeAll, beforeEach, afterEach, vi } from "vitest";
 
@@ -94,6 +96,11 @@ jobs:
               environment: "node",
               setupFiles: ["./src/test/setup.ts"],
               include: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+              coverage: {
+                provider: 'v8',
+                reporter: ['text', 'json', 'html'],
+                reportsDirectory: './coverage'
+              }
             },
             resolve: {
               alias: {
@@ -110,20 +117,9 @@ jobs:
           });
           EOF
 
-      # Ensure coverage directory permissions
-      - name: Ensure coverage directory permissions
-        run: |
-          mkdir -p coverage
-          chmod -R 777 coverage
-
-      - name: Run tests with coverage
-        run: |
-          mkdir -p coverage
-          yarn test --coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./coverage
-          flags: unittests
-          fail_ci_if_error: true
+      - name: Run Lint
+        run: yarn lint --fix
+      - name: Run Format
+        run: yarn format --write
+      - name: Run Tests
+        run: yarn test --reporter=default

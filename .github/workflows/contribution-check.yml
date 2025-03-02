@@ -16,6 +16,8 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn install
+      - name: Update Vitest packages
+        run: yarn add -D vitest@latest @vitest/coverage-v8@latest
       - name: Install rimraf globally
         run: npm install -g rimraf
 
@@ -92,6 +94,11 @@ jobs:
               environment: "node",
               setupFiles: ["./src/test/setup.ts"],
               include: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+              coverage: {
+                provider: 'v8',
+                reporter: ['text', 'json', 'html'],
+                reportsDirectory: './coverage'
+              }
             },
             resolve: {
               alias: {
@@ -113,4 +120,4 @@ jobs:
       - name: Run Format
         run: yarn format --write
       - name: Run Tests
-        run: yarn test
+        run: yarn test --reporter=default
