@@ -49,5 +49,8 @@ export default defineConfig({
 		testTimeout: 10000,
 		maxConcurrency: 5,
 		isolate: true,
+		deps: {
+			inline: ["vitest"],
+		},
 	},
 });

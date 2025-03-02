@@ -163,28 +163,28 @@ describe("Environment Configuration", () => {
 		expect(env.DATABASE_URL).toBe("postgres://test:test@localhost:5432/test");
 	});
 	it("should use default environment in error message when NODE_ENV is not set", async () => {
-  process.env.NODE_ENV = undefined;
-  process.env.DATABASE_URL = "invalid-url";
+		process.env.NODE_ENV = undefined;
+		process.env.DATABASE_URL = "invalid-url";
 
-  let errorThrown = false;
-  try {
-    await import("./env");
-    // If we get here, no error was thrown
-    expect(true).toBe(false); // Force test to fail if no error thrown
-  } catch (error: unknown) {
-    errorThrown = true;
-    // Type guard to check if error is an Error object
-    if (error instanceof Error) {
-      expect(error.message).toBe(
-        "Invalid environment variables for development environment."
-      );
-    } else {
-      // If it's not an Error object, fail the test
-      expect(true).toBe(false); // Force test to fail
-    }
-  }
-  
-  // Ensure an error was thrown
-  expect(errorThrown).toBe(true);
-});
+		let errorThrown = false;
+		try {
+			await import("./env");
+			// If we get here, no error was thrown
+			expect(true).toBe(false); // Force test to fail if no error thrown
+		} catch (error: unknown) {
+			errorThrown = true;
+			// Type guard to check if error is an Error object
+			if (error instanceof Error) {
+				expect(error.message).toBe(
+					"Invalid environment variables for development environment.",
+				);
+			} else {
+				// If it's not an Error object, fail the test
+				expect(true).toBe(false); // Force test to fail
+			}
+		}
+
+		// Ensure an error was thrown
+		expect(errorThrown).toBe(true);
+	});
 });
