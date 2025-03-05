@@ -1,5 +1,5 @@
-import { createMockProfile } from "../factories/profileData";
 import type { ProfileData } from "../../@types/linkedin.d";
+import { createMockProfile } from "../factories/profileData";
 
 /**
  * Builder para criar perfis de teste com configurações personalizadas

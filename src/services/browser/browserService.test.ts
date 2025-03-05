@@ -1,7 +1,7 @@
-import { BrowserService } from "./browserService";
-import { AppError } from "../../utils/errors/AppError";
 import puppeteer from "puppeteer";
-import { vi, describe, it, expect, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { AppError } from "../../utils/errors/AppError";
+import { BrowserService } from "./browserService";
 
 // Mock puppeteer
 vi.mock("puppeteer", () => ({

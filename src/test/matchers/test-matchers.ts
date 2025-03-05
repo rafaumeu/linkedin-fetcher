@@ -2,25 +2,25 @@
  * Matchers personalizados para testes de perfil
  */
 export const profileMatchers = {
-  toBeEmptyExperience(received: any) {
-    // Check if all required fields are empty strings except title
-    // This allows for cases where title might have a value but everything else is empty
-    const pass = 
-      received.company === "" && 
-      received.duration === "" && 
-      received.location === "" && 
-      received.description === "" && 
-      Array.isArray(received.skills) && 
-      received.skills.length === 0;
-    
-    return {
-      pass,
-      message: () => 
-        pass 
-          ? `Expected ${JSON.stringify(received)} not to be an empty experience`
-          : `Expected ${JSON.stringify(received)} to be an empty experience`,
-    };
-  },
+	toBeEmptyExperience(received: any) {
+		// Check if all required fields are empty strings except title
+		// This allows for cases where title might have a value but everything else is empty
+		const pass =
+			received.company === "" &&
+			received.duration === "" &&
+			received.location === "" &&
+			received.description === "" &&
+			Array.isArray(received.skills) &&
+			received.skills.length === 0;
+
+		return {
+			pass,
+			message: () =>
+				pass
+					? `Expected ${JSON.stringify(received)} not to be an empty experience`
+					: `Expected ${JSON.stringify(received)} to be an empty experience`,
+		};
+	},
 };
 
 // Estende o tipo global do Vitest para incluir nossos matchers personalizados

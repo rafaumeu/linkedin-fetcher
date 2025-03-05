@@ -10,8 +10,8 @@ import {
 import { profileMatchers } from "@/test/matchers/test-matchers";
 import type { TestBrowserService } from "@/test/types/browserService";
 import * as domUtils from "@/utils/domUtils";
-import * as profileUtils from "@/utils/profile/profileUtils";
 import * as profileExtractor from "@/utils/extractors/profileExtractor";
+import * as profileUtils from "@/utils/profile/profileUtils";
 
 import type { ProfileData } from "@/@types/linkedin";
 import type { BrowserService } from "@/services/browser/browserService";

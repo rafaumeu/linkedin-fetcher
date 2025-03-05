@@ -13,9 +13,9 @@ vi.useFakeTimers();
 expect.extend(profileMatchers);
 
 // Setup DOM environment for tests
-const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>', {
-  url: 'http://localhost',
-  pretendToBeVisual: true,
+const dom = new JSDOM("<!DOCTYPE html><html><body></body></html>", {
+	url: "http://localhost",
+	pretendToBeVisual: true,
 });
 
 // Set up global objects
@@ -23,11 +23,11 @@ global.document = dom.window.document;
 global.window = dom.window as any;
 
 // Fix navigator assignment
-Object.defineProperty(global, 'navigator', {
-  value: {
-    userAgent: 'node.js',
-  },
-  writable: true,
+Object.defineProperty(global, "navigator", {
+	value: {
+		userAgent: "node.js",
+	},
+	writable: true,
 });
 
 // Add any other globals needed for tests
