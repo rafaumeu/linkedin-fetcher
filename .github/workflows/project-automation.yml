@@ -65,6 +65,21 @@ jobs:
               org: context.repo.owner,
               number: 6
             });
+            
+            // Find the correct item ID
+            let itemId = null;
+            const itemNumber = event.issue ? event.issue.number : event.pull_request.number;
+            
+            projectItems.user.projectV2.items.nodes.forEach(node => {
+              if (node.content && node.content.number === itemNumber) {
+                itemId = node.id;
+              }
+            });
+            
+            if (!itemId) {
+              console.log(`Could not find item with number ${itemNumber} in project`);
+              return;
+            }
 
             // Update the status
             await github.graphql(`

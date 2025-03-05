@@ -1,0 +1,27 @@
+name: Configure Security Settings
+
+on:
+  workflow_dispatch:
+
+jobs:
+  configure_security:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: write
+    
+    steps:
+      - name: Enable Private Vulnerability Reporting
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.repos.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              security_and_analysis: {
+                private_vulnerability_reporting: {
+                  enabled: true
+                }
+              }
+            });
