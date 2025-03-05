@@ -54,9 +54,6 @@ ci:
         "tsconfig.json",
       ]
 
-ci:
-  - any: [".github/workflows/**/*"]
-
 docker:
   - any: ["Dockerfile", "docker-compose.yml", ".dockerignore"]
 # Add 'test' label to any change to test files
