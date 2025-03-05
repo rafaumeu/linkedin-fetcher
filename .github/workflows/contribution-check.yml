@@ -40,111 +40,26 @@ jobs:
           echo "NODE_ENV=test" > .env
           echo "DATABASE_URL=postgres://test:test@localhost:5432/test" >> .env
           echo "PORT=3333" >> .env
-      # Garantir que os arquivos existam para os testes
-      - name: Ensure test files exist
+      # Copy test stubs instead of creating them inline
+      - name: Copy test stubs to source directories
         run: |
+          # Create directories if they don't exist
           mkdir -p src/services/scrapper
           mkdir -p src/services/browser
           mkdir -p src/utils/errors
           mkdir -p src/utils/extractors
           mkdir -p src/utils/profile
-          mkdir -p src/db
           mkdir -p src/utils/logger
+          mkdir -p src/db
           
-          # Create stub files with proper implementations
-          echo 'import { AppError } from "../utils/errors/AppError";
-          export class BrowserService {
-            browser = null;
-            async initialize() {
-              if (this.browser) return this.browser;
-              try {
-                this.browser = { newPage: () => ({}) };
-                return this.browser;
-              } catch (error) {
-                if (error instanceof Error) {
-                  throw new AppError(`Failed to initialize browser: ${error.message}`, 500);
-                }
-                throw new AppError("Failed to initialize browser: Unknown error", 500);
-              }
-            }
-            async getPage() {
-              if (!this.browser) await this.initialize();
-              const page = { goto: () => {}, setUserAgent: () => {} };
-              return page;
-            }
-            async close() {
-              if (this.browser) await this.browser.close();
-            }
-          }' > src/services/browser/browserService.ts
-          
-          echo 'import { profileUtils } from "../../utils/profile/profileUtils";
-          export class LinkedinProfileScrapper {
-            async scrapeProfile(url) {
-              if (!url.includes("linkedin.com")) {
-                return { success: false, error: "URL de perfil do LinkedIn inválida" };
-              }
-              return { success: true, data: profileUtils.EMPTY_PROFILE };
-            }
-            async processRawProfileData(data) {
-              return profileUtils.EMPTY_PROFILE;
-            }
-            async extractProfileData() {
-              return {};
-            }
-          }' > src/services/scrapper/profileScrapper.ts
-          
-          echo 'export const connection = { 
-            query: async (query, params) => {
-              return [{ "?column?": 1 }];
-            }
-          };
-          export async function checkConnection() {
-            try {
-              await connection.query("SELECT 1");
-              return true;
-            } catch (error) {
-              return false;
-            }
-          }' > src/db/connection.ts
-          
-          echo 'export const logger = { 
-            error: () => {}, 
-            info: () => {}, 
-            warn: () => {} 
-          };' > src/utils/logger/index.ts
-          
-          echo 'export const profileUtils = {
-            EMPTY_PROFILE: {
-              name: "",
-              headline: "",
-              location: "",
-              about: "",
-              experience: [],
-              education: [],
-              certifications: []
-            },
-            hasProfileData: () => true,
-            hasProfileStructure: () => true
-          };' > src/utils/profile/profileUtils.ts
-          
-          echo 'export class AppError extends Error {
-            statusCode;
-            constructor(message, statusCode = 400) {
-              super(message);
-              this.statusCode = statusCode;
-            }
-          }
-          export class ValidationError extends AppError {}
-          export class ProfileNotFoundError extends AppError {}
-          export class NotFoundError extends AppError {}
-          export class LinkedInRateLimitError extends AppError {}
-          export class NavigationError extends AppError {}' > src/utils/errors/AppError.ts
-          
-          echo 'export const env = {
-            NODE_ENV: process.env.NODE_ENV || "test",
-            PORT: 3333,
-            DATABASE_URL: "postgres://test:test@localhost:5432/test"
-          };' > src/env.ts
+          # Copy stubs to their respective locations
+          cp -f src/test/stubs/services/browser/browserService.ts src/services/browser/
+          cp -f src/test/stubs/services/scrapper/profileScrapper.ts src/services/scrapper/
+          cp -f src/test/stubs/utils/errors/AppError.ts src/utils/errors/
+          cp -f src/test/stubs/utils/profile/profileUtils.ts src/utils/profile/
+          cp -f src/test/stubs/utils/logger/index.ts src/utils/logger/
+          cp -f src/test/stubs/db/connection.ts src/db/
+          cp -f src/test/stubs/env.ts src/
       - name: Run tests
         run: yarn test
       - name: Check code coverage
