@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+      actions: read
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js
@@ -23,7 +25,9 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: javascript
+          queries: security-and-quality
       - name: Run CodeQL analysis
         uses: github/codeql-action/analyze@v3
         with:
           category: 'security'
+          queries: security-and-quality

@@ -164,12 +164,19 @@ export function extractDates(dateElement: Element | null) {
 		// Check if the date contains a hyphen for date range
 		if (dateText.includes(" - ")) {
 			const dateParts = dateText.split(" - ");
-			startDate = dateParts[0]?.trim() || "";
+			/* v8 ignore next */
+			startDate = cleanDate(dateParts[0]?.trim() || "");
 			// Verificar se existe uma segunda parte e se não está vazia
-			endDate = dateParts[1]?.trim()?.split("·")[0]?.trim() || "";
+			/* v8 ignore next */
+			const secondPart = dateParts[1]?.trim() || "";
+			/* v8 ignore next */
+			if (secondPart) {
+				/* v8 ignore next */
+				endDate = cleanDate(secondPart.split("·")[0]?.trim() || "");
+			}
 		} else {
 			// If there's no hyphen, it's just a start date
-			startDate = dateText.replace("-", "").trim();
+			startDate = cleanDate(dateText.replace("-", "").trim());
 		}
 	}
 

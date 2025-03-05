@@ -39,15 +39,15 @@ export const linkedinSelectors = {
 
 export function decodeHtmlEntities(text: string | undefined | null): string {
 	if (!text) return "";
-
 	return text
-		.replace(/&amp;/g, "&")
 		.replace(/&lt;/g, "<")
 		.replace(/&gt;/g, ">")
 		.replace(/&quot;/g, '"')
-		.replace(/&#039;/g, "'")
+		.replace(/&#039;/g, "'") // Fixed: Added proper handling for &#039;
+		.replace(/&#39;/g, "'")
 		.replace(/&apos;/g, "'")
-		.replace(/&nbsp;/g, " ");
+		.replace(/&nbsp;/g, " ")
+		.replace(/&amp;/g, "&"); // Moved to end to prevent double unescaping
 }
 
 export function processSkills(
