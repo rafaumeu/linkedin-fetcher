@@ -2,11 +2,45 @@ import { resolve } from "node:path";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
 
+const ciAliases = process.env.CI
+	? [
+			{
+				find: "@/services/browser/browserService",
+				replacement: resolve(
+					__dirname,
+					"src/services/browser/browserService.ts",
+				),
+			},
+			{
+				find: "@/services/scrapper/profileScrapper",
+				replacement: resolve(
+					__dirname,
+					"src/services/scrapper/profileScrapper.ts",
+				),
+			},
+			{
+				find: "@/utils/logger",
+				replacement: resolve(__dirname, "src/test/stubs/utils/logger/index.ts"),
+			},
+			{
+				find: "@/db/connection",
+				replacement: resolve(__dirname, "src/db/connection.ts"),
+			},
+			// Add explicit root alias
+			{
+				find: "@",
+				replacement: resolve(__dirname, "./src"),
+			},
+		]
+	: [];
+
 export default defineConfig({
 	resolve: {
-		alias: {
-			"@": resolve(__dirname, "./src"),
-		},
+		alias: process.env.CI
+			? ciAliases
+			: {
+					"@": resolve(__dirname, "./src"),
+				},
 	},
 	plugins: [tsconfigPaths()],
 	test: {
@@ -14,8 +48,19 @@ export default defineConfig({
 		environment: "node",
 		include: ["src/**/*.{test,spec}.ts"],
 		exclude: ["src/**/*.e2e.test.ts"],
-		setupFiles: ["./src/test/setup.ts"],
+		setupFiles: process.env.CI
+			? [
+					"./src/test/setup.ts",
+					"./src/test/stubs/services/browser/browserService.ts",
+				]
+			: ["./src/test/setup.ts"],
 		reporters: ["verbose"],
+
+		poolOptions: {
+			threads: {
+				singleThread: true,
+			},
+		},
 		coverage: {
 			provider: "v8",
 			reporter: ["text", "json", "html", "lcov"],

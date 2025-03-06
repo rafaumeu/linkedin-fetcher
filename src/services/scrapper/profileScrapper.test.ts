@@ -1,4 +1,3 @@
-import { LinkedinProfileScrapper } from "@/services/scrapper/profileScrapper";
 import { ProfileBuilder } from "@/test/builders/ProfileBuilder";
 import { createMockBrowserService } from "@/test/helpers/mockBrowser";
 import { setupDomMocks } from "@/test/helpers/setupDomMocks";
@@ -16,6 +15,7 @@ import * as profileUtils from "@/utils/profile/profileUtils";
 import type { ProfileData } from "@/@types/linkedin";
 import type { BrowserService } from "@/services/browser/browserService";
 
+import { LinkedinProfileScrapper } from "@/services/scrapper/profileScrapper";
 import { expect, vi } from "vitest"; // Import expect explicitly
 
 // Mock dos extractors no nível superior do arquivo
@@ -272,7 +272,7 @@ describe("LinkedinProfileScrapper", () => {
 
 			const originalObjectKeys = Object.keys;
 			Object.keys = vi.fn().mockReturnValue([]);
-
+			const url = "https://linkedin.com/in/test";
 			try {
 				const result = await scrapper.scrapeProfile(
 					"https://linkedin.com/in/test",
@@ -280,7 +280,7 @@ describe("LinkedinProfileScrapper", () => {
 
 				expect(result.success).toBe(false);
 
-				expect(result.error).toContain("Profile not found");
+				expect(result.error).toContain(`Perfil não encontrado: ${url}`);
 
 				expect(Object.keys).toHaveBeenCalled();
 			} finally {

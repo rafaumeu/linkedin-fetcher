@@ -1,6 +1,6 @@
+import { logger } from "@/utils/logger";
 import type { FastifyError, FastifyReply, FastifyRequest } from "fastify";
 import { ZodError } from "zod";
-import { logger } from "../logger"; // Implementar um serviço de logging
 import { AppError } from "./AppError";
 
 /**

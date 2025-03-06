@@ -1,7 +1,10 @@
 import puppeteer from "puppeteer";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AppError } from "../../utils/errors/AppError";
-import { BrowserService } from "./browserService";
+// Update the import to use the absolute path with @ alias
+import { BrowserService } from "@/services/browser/browserService";
+// Instead of:
+// import { BrowserService } from "./browserService";
 
 // Mock puppeteer
 vi.mock("puppeteer", () => ({

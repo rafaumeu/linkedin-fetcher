@@ -1,3 +1,5 @@
+import { hasProfileStructure } from "@/test/stubs/utils/profile/profileUtils";
+
 /**
  * Matchers personalizados para testes de perfil
  */
@@ -53,3 +55,23 @@ declare module "vitest" {
 	interface Assertion extends CustomMatchers {}
 	interface AsymmetricMatchersContaining extends CustomMatchers {}
 }
+
+expect.extend({
+	toBeValidProfile(profile) {
+		const pass = hasProfileStructure(profile);
+		return {
+			pass,
+			message: () =>
+				`Expected profile to be valid but got ${JSON.stringify(profile)}`,
+		};
+	},
+	toHaveValidEducation(education) {
+		const pass =
+			Array.isArray(education) && education.every((e) => typeof e === "object");
+		return {
+			pass,
+			message: () =>
+				`Expected valid education but got ${JSON.stringify(education)}`,
+		};
+	},
+});

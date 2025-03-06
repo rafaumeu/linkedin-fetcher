@@ -25,17 +25,46 @@ export function hasProfileData(profile: ProfileData): boolean {
 }
 
 export function hasProfileStructure(obj: unknown): boolean {
+	if (typeof obj !== "object" || obj === null) return false;
+
+	const profile = obj as Record<string, unknown>;
 	return (
-		typeof obj === "object" &&
-		obj !== null &&
-		"name" in obj &&
-		"headline" in obj &&
-		"location" in obj
+		typeof profile.name === "string" &&
+		typeof profile.headline === "string" &&
+		typeof profile.location === "string"
 	);
 }
 
 export const profileUtils = {
-	EMPTY_PROFILE,
-	hasProfileData,
-	hasProfileStructure,
+	EMPTY_PROFILE: {
+		name: "",
+		headline: "",
+		location: "",
+		about: "",
+		experience: [],
+		education: [],
+		certifications: [],
+	},
+
+	hasProfileStructure: (data: unknown): boolean => {
+		return !!(
+			data &&
+			typeof data === "object" &&
+			"name" in (data as object) &&
+			"headline" in (data as object) &&
+			"location" in (data as object)
+		);
+	},
+
+	hasProfileData: (profile: any) => {
+		return !!(
+			profile.name ||
+			profile.headline ||
+			profile.location ||
+			profile.about ||
+			(profile.experience && profile.experience.length > 0) ||
+			(profile.education && profile.education.length > 0) ||
+			(profile.certifications && profile.certifications.length > 0)
+		);
+	},
 };

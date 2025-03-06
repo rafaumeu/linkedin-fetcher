@@ -44,30 +44,20 @@ export class NotFoundError extends AppError {
  * Erro específico para perfis do LinkedIn não encontrados
  */
 // Update the ProfileNotFoundError class to include the profileUrl property
-export class ProfileNotFoundError extends Error {
-	profileUrl: string;
-
-	constructor(profileUrl: string) {
-		super(`Profile not found: ${profileUrl}`);
-		this.name = "ProfileNotFoundError";
-		this.profileUrl = profileUrl;
-
-		// This maintains proper prototype chain in transpiled JavaScript
-		Object.setPrototypeOf(this, ProfileNotFoundError.prototype);
-	}
+// Remove the first ProfileNotFoundError declaration and keep this one
+export class ProfileNotFoundError extends AppError {
+  constructor(public profileUrl: string) {
+    super(`Perfil não encontrado: ${profileUrl}`, 404);
+    this.name = 'ProfileNotFoundError';
+  }
 }
 
-/**
- * Erro para limite de taxa do LinkedIn
- */
+// Keep LinkedInRateLimitError as is
 export class LinkedInRateLimitError extends AppError {
-	constructor() {
-		super(
-			"Limite de taxa do LinkedIn atingido, implementando período de espera",
-			429,
-		);
-		this.name = "LinkedInRateLimitError";
-	}
+  constructor(waitTime = 30) { // Type inferred from default value
+    super(`Limite de taxa do LinkedIn atingido. Tempo de espera: ${waitTime} minutos`, 429);
+    this.name = 'LinkedInRateLimitError';
+  }
 }
 
 /**

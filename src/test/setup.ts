@@ -1,7 +1,20 @@
 import { setupDomMocks } from "@/test/helpers/setupDomMocks";
 import { profileMatchers } from "@/test/matchers/test-matchers";
+import { resetEnvStub } from "@/test/stubs/env";
 import { JSDOM } from "jsdom";
 import { vi } from "vitest";
+import { config } from "dotenv";
+import { afterEach } from "vitest";
+
+config({ path: ".env.test" });
+
+// Reset all mocks between tests
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.resetAllMocks();
+  vi.unmock("@/services/scrapper/profileScrapper");
+  vi.unmock("@/services/browser/browserService");
+});
 
 // Setup DOM environment
 setupDomMocks();
@@ -41,4 +54,9 @@ vi.spyOn(console, "error").mockImplementation(() => {});
 // Limpa todos os mocks após cada teste
 afterEach(() => {
 	vi.clearAllMocks();
+});
+
+beforeEach(() => {
+	resetEnvStub();
+	vi.stubEnv("NODE_ENV", "test");
 });

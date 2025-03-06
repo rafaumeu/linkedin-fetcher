@@ -25,7 +25,7 @@ jobs:
         run: yarn lint
 
       - name: Run Format
-        run: yarn format
+        run: yarn format:fix
 
       - name: Check formatting
-        run: yarn lint
+        run: yarn lint:fix

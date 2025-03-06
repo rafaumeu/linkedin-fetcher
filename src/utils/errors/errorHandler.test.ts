@@ -1,8 +1,8 @@
+import { errorHandler } from "@/utils/errors/errorHandler";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ZodError, z } from "zod";
+import { z } from "zod";
 import { AppError } from "./AppError";
-import { errorHandler } from "./errorHandler";
 
 // Mock env para evitar erros de validação
 vi.mock("../../env", () => ({

@@ -32,7 +32,7 @@ describe("AppError", () => {
 
 			expect(error).toBeInstanceOf(Error);
 			expect(error).toBeInstanceOf(ProfileNotFoundError);
-			expect(error.message).toBe(`Profile not found: ${profileUrl}`);
+			expect(error.message).toBe(`Perfil não encontrado: ${profileUrl}`);
 			expect(error.name).toBe("ProfileNotFoundError");
 			expect(error.profileUrl).toBe(profileUrl);
 		});
@@ -44,7 +44,7 @@ describe("AppError", () => {
 
 		it("should handle empty profile URL", () => {
 			const error = new ProfileNotFoundError("");
-			expect(error.message).toBe("Profile not found: ");
+			expect(error.message).toBe("Perfil não encontrado: ");
 			expect(error.profileUrl).toBe("");
 		});
 	});
@@ -76,7 +76,7 @@ describe("AppError", () => {
 			expect(error).toBeInstanceOf(Error);
 			expect(error).toBeInstanceOf(LinkedInRateLimitError);
 			expect(error.message).toBe(
-				"Limite de taxa do LinkedIn atingido, implementando período de espera",
+				"Limite de taxa do LinkedIn atingido. Tempo de espera: 30 minutos",
 			);
 			expect(error.name).toBe("LinkedInRateLimitError");
 			expect(error.statusCode).toBe(429);

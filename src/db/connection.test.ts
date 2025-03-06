@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { checkConnection, client, query } from "./connection";
+import { checkConnection, client, query } from "@/db/connection";
 
 // Mock the client and dependencies
 vi.mock("../env", () => ({
