@@ -1,3 +1,9 @@
 {
-  "*.{js,jsx,ts,tsx}": ["biome check --apply", "biome format --write"]
+	"*.{js,jsx,ts,tsx}": [
+		"biome check --apply",
+		"biome format --write",
+		"tsc --noEmit",
+		"vitest related --run"
+	],
+	"*.{json,yml,yaml,md}": ["biome format --write"]
 }

@@ -1,0 +1,8 @@
+bug:
+  - "(bug|error|failure|fail|crash)"
+feature:
+  - "(feature|enhancement|request)"
+documentation:
+  - "(doc|documentation)"
+question:
+  - "(question|help|support)"

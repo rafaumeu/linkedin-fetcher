@@ -1,25 +1,33 @@
 frontend:
   - any: ["src/pages/**/*", "src/components/**/*"]
+  - any: ["src/pages/**/*", "src/components/**/*"]
 
 backend:
+  - any: ["src/server/**/*", "src/api/**/*"]
   - any: ["src/server/**/*", "src/api/**/*"]
 
 core:
   - any: ["src/server.ts", "src/env.ts", "src/index.ts"]
+  - any: ["src/server.ts", "src/env.ts", "src/index.ts"]
 
 services:
+  - any: ["src/services/**/*"]
   - any: ["src/services/**/*"]
 
 database:
   - any: ["src/database/**/*", "drizzle.config.ts", "src/schema/**/*"]
+  - any: ["src/database/**/*", "drizzle.config.ts", "src/schema/**/*"]
 
 tests:
+  - any: ["src/**/*.test.ts", "src/**/*.spec.ts", "vitest.config.ts"]
   - any: ["src/**/*.test.ts", "src/**/*.spec.ts", "vitest.config.ts"]
 
 dependencies:
   - any: ["package.json", "yarn.lock", "pnpm-lock.yaml"]
+  - any: ["package.json", "yarn.lock", "pnpm-lock.yaml"]
 
 documentation:
+  - any: ["**/*.md", "docs/**/*"]
   - any: ["**/*.md", "docs/**/*"]
 
 configuration:
@@ -36,5 +44,33 @@ configuration:
 ci:
   - any: [".github/workflows/**/*"]
 
+  - any:
+      [
+        ".github/**/*",
+        "*.config.js",
+        "*.config.ts",
+        ".env.example",
+        "biome.json",
+        "tsconfig.json",
+      ]
+
 docker:
   - any: ["Dockerfile", "docker-compose.yml", ".dockerignore"]
+# Add 'test' label to any change to test files
+test:
+  - src/**/*.test.ts
+  - src/**/*.spec.ts
+  - src/**/*.e2e.test.ts
+  - src/test/**/*
+
+# Add 'feature' label to any change in the src directory (excluding tests)
+feature:
+  - src/**/*.ts
+  - "!src/**/*.test.ts"
+  - "!src/**/*.spec.ts"
+  - "!src/**/*.e2e.test.ts"
+  - "!src/test/**/*"
+
+# Add 'bug' label to any change in the utils/errors directory
+bug:
+  - src/utils/errors/**/*

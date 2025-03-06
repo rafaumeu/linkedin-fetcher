@@ -9,6 +9,7 @@ A modern LinkedIn profile scraping service built with TypeScript and Fastify.
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-2D3748.svg)](https://www.postgresql.org/)
 [![Drizzle](https://img.shields.io/badge/Drizzle-Latest-green.svg)](https://orm.drizzle.team)
 [![Code Style](https://img.shields.io/badge/Code_Style-Biome-purple.svg)](https://biomejs.dev/)
+[![Coverage](https://img.shields.io/codecov/c/github/rafaumeu/linkedin-fetcher/main)](https://codecov.io/gh/rafaumeu/linkedin-fetcher)
 [![Release](https://img.shields.io/github/v/release/rafaumeu/linkedin-fetcher)](https://github.com/rafaumeu/linkedin-fetcher/releases)
 [![License](https://img.shields.io/github/license/rafaumeu/linkedin-fetcher)](LICENSE)
 
@@ -18,7 +19,7 @@ A modern LinkedIn profile scraping service built with TypeScript and Fastify.
 
 | [Features](#-features) | [Tech Stack](#-tech-stack) | [Development](#-development) |
 |----------------------|---------------------------|--------------------------|
-| [Prerequisites](#-prerequisites) | [Setup](#️-setup) | [Contributing](#-contributing) |
+| [Prerequisites](#-prerequisites) | [Setup](#️-setup) | [Testing](#-testing) | [Contributing](#-contributing) |
 
 ---
 
@@ -101,6 +102,16 @@ yarn dev
 - `yarn db:generate`: Generate database migrations
 - `yarn db:push`: Apply migrations
 - `yarn db:studio`: Open Drizzle Studio
+
+## 📋 Testing
+
+This project has comprehensive test coverage including unit, integration, and end-to-end tests.
+
+- Unit and integration tests: `yarn test`
+- End-to-end tests: `yarn run test:e2e`
+- Coverage reports: `yarn run test:coverage`
+
+For detailed information about testing, see [TESTING.md](./TESTING.md).
 
 ## 🤝 Contributing
 
