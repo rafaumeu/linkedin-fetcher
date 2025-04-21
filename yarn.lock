@@ -1643,10 +1643,10 @@ drizzle-kit@^0.30.4:
     esbuild "^0.19.7"
     esbuild-register "^3.5.0"
 
-drizzle-orm@^0.39.3:
-  version "0.39.3"
-  resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-0.39.3.tgz#4f844d5849a0236082340e47e2dc9eecc1e0e64c"
-  integrity sha512-EZ8ZpYvDIvKU9C56JYLOmUskazhad+uXZCTCRN4OnRMsL+xAJ05dv1eCpAG5xzhsm1hqiuC5kAZUCS924u2DTw==
+drizzle-orm@^0.42.0:
+  version "0.42.0"
+  resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-0.42.0.tgz#2ec319c8f52a6e02086ae1a5c39b8a324914dafa"
+  integrity sha512-pS8nNJm2kBNZwrOjTHJfdKkaU+KuUQmV/vk5D57NojDq4FG+0uAYGMulXtYT///HfgsMF0hnFFvu1ezI3OwOkg==
 
 dunder-proto@^1.0.1:
   version "1.0.1"
