@@ -46,7 +46,7 @@
     "@vitest/coverage-v8": "^1.2.2",
     "drizzle-kit": "^0.30.4",
     "husky": "^9.1.7",
-    "lint-staged": "^15.4.3",
+    "lint-staged": "^15.5.2",
     "supertest": "^6.3.4",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
